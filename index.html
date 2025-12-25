@@ -38,7 +38,7 @@
         font-family: 'Inter', sans-serif;
         background-color: #f8fafc;
       }
-      /* Custom Scrollbar for results */
+      /* Custom Scrollbar */
       .custom-scrollbar::-webkit-scrollbar {
         width: 8px;
       }
@@ -60,8 +60,21 @@
       .markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
       .markdown-body blockquote { border-left: 4px solid #0ea5e9; padding-left: 1rem; font-style: italic; color: #475569; background: #f0f9ff; padding: 0.5rem 1rem; border-radius: 0 4px 4px 0; }
       .markdown-body code { background-color: #f1f5f9; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.9em; }
+      /* Fade in animation */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
     </style>
-  <script type="importmap">
+    <!-- 
+      CRITICAL: Import Map for React 19 
+      - Enforces singleton React instance via ?deps=react@19.0.0
+      - Removes conflicting wildcards
+    -->
+    <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@19.0.0",
@@ -74,7 +87,7 @@
   }
 }
 </script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
