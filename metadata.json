@@ -1,0 +1,5 @@
+{
+  "name": "Evidence Miner",
+  "description": "A professional medical evidence synthesis tool powered by Gemini 3. It allows researchers to analyze clinical text, search PubMed literature, and generate systematic reviews using advanced AI reasoning.",
+  "requestFramePermissions": []
+}
