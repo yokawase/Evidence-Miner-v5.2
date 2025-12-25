@@ -13,6 +13,15 @@ const scrollToRef = (ref: React.RefObject<HTMLDivElement | null>) => {
   }
 };
 
+// --- Safe Env Check ---
+const isApiKeyMissing = () => {
+  try {
+    return typeof process === 'undefined' || !process.env || !process.env.API_KEY;
+  } catch {
+    return true;
+  }
+};
+
 // --- Source Code for Export ---
 const getSourceCode = () => `
 [Evidence Miner - Source Code Export]
@@ -21,7 +30,7 @@ Includes: App.tsx, services/geminiService.ts, services/pubmedService.ts, types.t
 `;
 
 const App: React.FC = () => {
-  const [apiKeyMissing] = useState(!process.env.API_KEY);
+  const [apiKeyMissing] = useState(isApiKeyMissing());
   
   // Section Refs for Scrolling
   const inputRef = useRef<HTMLDivElement>(null);
@@ -227,7 +236,7 @@ const App: React.FC = () => {
             <div className="w-8 h-8 bg-medical-600 rounded-lg flex items-center justify-center text-white">
               <ActivityIcon className="w-5 h-5" />
             </div>
-            <span className="text-xl font-bold text-slate-800 tracking-tight">Evidence Miner <span className="text-medical-600">v5.2</span></span>
+            <span className="text-xl font-bold text-slate-800 tracking-tight">Evidence Miner <span className="text-medical-600">v5.4</span></span>
           </div>
           <div className="flex gap-3">
              {apiKeyMissing && <span className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">Demo Mode</span>}

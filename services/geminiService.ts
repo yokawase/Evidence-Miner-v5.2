@@ -2,8 +2,22 @@ import { GoogleGenAI, Schema, Type } from "@google/genai";
 import { sanitizeInput } from "../utils";
 import { PubMedArticle, MeSHTerm } from "../types";
 
+// Helper for safe environment variable access in browser
+const getApiKey = () => {
+  try {
+    // Check if process exists before accessing env to avoid ReferenceError
+    if (typeof process !== 'undefined' && process.env) {
+      return process.env.API_KEY || '';
+    }
+    return '';
+  } catch (e) {
+    console.warn("Environment variable access failed, defaulting to empty key.");
+    return '';
+  }
+};
+
 // Initialize Gemini Client
-const apiKey = process.env.API_KEY || '';
+const apiKey = getApiKey();
 const ai = new GoogleGenAI({ apiKey });
 
 const FLASH_MODEL = 'gemini-3-flash-preview'; // Speed
@@ -13,7 +27,7 @@ const PRO_MODEL = 'gemini-3-pro-preview'; // Reasoning
  * Extracts MeSH terms from text (translates if Japanese).
  */
 export const extractMeSHTerms = async (inputText: string): Promise<MeSHTerm[]> => {
-  if (!apiKey) throw new Error("API Key is missing.");
+  if (!apiKey) throw new Error("API Key is missing. Please check your environment configuration.");
 
   const prompt = `
     Analyze the following medical text.
